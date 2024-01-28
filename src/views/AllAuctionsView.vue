@@ -24,6 +24,8 @@ export default {
         }
     },
     mounted() {
+        console.log(process.env.VUE_APP_SERVERURL);
+        console.log(process.env.VUE_APP_WSSERVERURL);
         axios.get(`${process.env.VUE_APP_SERVERURL}/items`, {
         })
         .then((res) => {
@@ -40,7 +42,6 @@ export default {
     },
     methods: {
         getStatus(itemId) {
-            console.log(itemId);
             if (this.itemStatus.length == 0) {
                 return "not live";
             }

@@ -84,7 +84,6 @@ export default {
         axios.get(`${process.env.VUE_APP_SERVERURL}/auctions/${this.itemId}`, {
         })
         .then((res) => {
-            console.log(res.data);
             if (res.data.itemId == this.itemId) {
                 this.startBid = res.data.startingBid;
                 this.minInc = res.data.minimumIncrement;
@@ -103,7 +102,6 @@ export default {
             this.connection = new WebSocket(process.env.VUE_APP_WSSERVERURL);
             this.connection.onopen = (message) => {
                 console.log("Connected");
-                console.log(this.authToken);
                 /*
                     auth requests will be:
                     type: "auth",
@@ -136,7 +134,6 @@ export default {
                             console.log ("auth is ok")
                             break;
                         case "update":
-                            console.log(request);
                             /*
                                 update notifications will be:
                                 type: "update"

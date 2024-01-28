@@ -49,7 +49,6 @@ export default {
         axios.get(`${process.env.VUE_APP_SERVERURL}/collections/home`, {
         })
         .then((res) => {
-            console.log(res);
             this.homeCollections = res.data;
             for (const collection of this.homeCollections) {
                 if (collection.name == 'recommends') {
