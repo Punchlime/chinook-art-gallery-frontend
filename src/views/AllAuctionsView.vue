@@ -24,8 +24,6 @@ export default {
         }
     },
     mounted() {
-        console.log(process.env.VUE_APP_SERVERURL);
-        console.log(process.env.VUE_APP_WSSERVERURL);
         axios.get(`${process.env.VUE_APP_SERVERURL}/items`, {
         })
         .then((res) => {

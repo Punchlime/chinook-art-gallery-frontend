@@ -80,21 +80,12 @@ export default {
                 iCount ++;
             }
             data.append('iCount', iCount);
-            console.log(this.files);
-            console.log(this.title);
-            console.log(this.content);
-            console.log(iCount);
-            for (const [key, value] of data) {
-                console.log(key);
-                console.log(value);
-            }
             axios.post(`${process.env.VUE_APP_SERVERURL}/items`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
             .then((res) => {
-                console.log(res.data);
                 this.$router.replace({name: 'items'});
                 this.$emit('createItemSuccess');
             })

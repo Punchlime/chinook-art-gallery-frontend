@@ -46,7 +46,6 @@ export default {
             }
         })
         .then((res) => {
-            console.log(res);
             this.user.username = res.data.name;
             this.user.email = res.data.email;
             this.user.mobile = res.data.mobile;

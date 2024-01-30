@@ -51,7 +51,6 @@ export default {
                 delay: 0
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -71,7 +70,6 @@ export default {
                 delay: 300
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -91,7 +89,6 @@ export default {
                 delay: 10
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -111,7 +108,6 @@ export default {
                 delay: 0
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -131,7 +127,6 @@ export default {
                 delay: 0
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -151,7 +146,6 @@ export default {
                 delay: 0
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -171,7 +165,6 @@ export default {
                 delay: 0
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);

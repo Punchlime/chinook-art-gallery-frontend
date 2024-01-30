@@ -145,7 +145,6 @@ export default {
                             this.minimumBid = request.minBid
                             break;
                         case "tick":
-                            console.log("tick" + request.timer);
                             this.timer = request.timer;
                             if (this.timer == 30) {
                                 this.bidHistory.push({user: "warning", userId: 0, bid: "1"});
@@ -167,7 +166,6 @@ export default {
                             this.isLive = true;
                             break;
                         case "delay":
-                            console.log("delay" + request.timer);
                             this.timer = request.timer;
                             break;
                         default:
@@ -192,7 +190,7 @@ export default {
                 }));
             } else {
                 // TODO throw error or prevent
-                console.log("not logged in")
+                console.log("not logged in");
             }
         },
         async checkLive(itemId) {

@@ -30,7 +30,6 @@ export default {
     methods: {
         loginSuccess(userInfo) {
             console.log("login successful");
-            console.log(userInfo);
             this.authToken = userInfo.token;
             this.isAdmin = userInfo.isAdmin;
             this.username = userInfo.username;

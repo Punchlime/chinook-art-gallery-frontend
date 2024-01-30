@@ -49,7 +49,6 @@ export default {
                 credit: registerObj.credit
             })
             .then((res) => {
-                console.log(res.data);
                 this.displayRegister = false;
                 this.displayRegisterSuccess = true;
             })
@@ -69,7 +68,6 @@ export default {
                 password: loginObj.password
             })
             .then((res) => {
-                console.log(res.data);
                 this.userInfo.token = res.data.token;
                 this.userInfo.isAdmin = res.data.isAdmin;
                 this.userInfo.username = res.data.username;
