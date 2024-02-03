@@ -9,6 +9,7 @@
         :user-logged-in="userLoggedIn"
         :auth-token="authToken"
         :username="username"
+        :user-id="userId"
     />
 </template>
 
@@ -24,7 +25,8 @@ export default {
             userLoggedIn: false,
             authToken: "",
             isAdmin: false,
-            username: ""
+            username: "",
+            userId: ""
         }
     },
     methods: {
@@ -33,6 +35,7 @@ export default {
             this.authToken = userInfo.token;
             this.isAdmin = userInfo.isAdmin;
             this.username = userInfo.username;
+            this.userId = userInfo.userID;
             this.userLoggedIn = true;
             // TODO link was "home"
             this.$router.replace({name: 'auctions'});

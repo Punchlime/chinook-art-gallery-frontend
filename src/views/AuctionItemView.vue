@@ -1,8 +1,9 @@
 <template>
     <div class="container-lg mx-auto">
-        <AuctionItemHeader
+        <div class="top padder" style="height: 50px;"></div>
+        <!-- <AuctionItemHeader
             :item="item"
-        ></AuctionItemHeader>
+        ></AuctionItemHeader> -->
         <AuctionItemCard
             :item="item"
             :user-logged-in="userLoggedIn"
@@ -14,6 +15,7 @@
             :min-increment="minInc"
             :timer="timer"
             :on-delay="onDelay"
+            :current-winner="currentWinner"
         ></AuctionItemCard>
     </div>
 </template>
@@ -24,7 +26,7 @@ import AuctionItemCard from '@/components/AuctionItemCard.vue';
 import axios from 'axios';
 export default {
     name: 'AuctionItemView',
-    props: ['authToken', 'userLoggedIn', 'username'],
+    props: ['authToken', 'userLoggedIn', 'username', 'userId'],
     data() {
         return {
             itemId: "",
@@ -38,7 +40,8 @@ export default {
             startBid: 0,
             minInc: 0,
             timer: 0,
-            onDelay: false
+            onDelay: false,
+            currentWinner: ""
         }
     },
     mounted() {
@@ -63,6 +66,11 @@ export default {
                     this.minimumBid = res.data.minBid
                     this.bidHistory = res.data.history;
                     for (let index in this.bidHistory) {
+                        if (this.bidHistory[index].userId == this.userId) {
+                            this.bidHistory[index].user = "You";
+                            this.bidHistory[index].userId = "You";
+                        }
+                        console.log(this.bidHistory[index]);
                         this.bidHistory[index].bid = "$" + this.bidHistory[index].bid + ".00";
                     }
                     // TODO
@@ -141,32 +149,44 @@ export default {
                                 currentBid: current winning bid
                                 minBid: new minimum bid
                             */
-                            this.bidHistory.push({user: request.currentWinner, userId: request.currentWinnerId, bid: "$" + request.currentBid + ".00"})
-                            this.minimumBid = request.minBid
+                            this.minimumBid = request.minBid;
+                            // TODO show "you"
+                            if (request.currentWinnerId == this.userId) {
+                                this.bidHistory.push({user: "You", userId: "You", bid: "$" + request.currentBid + ".00"});
+                                this.currentWinner = "You";
+                            } else {
+                                this.bidHistory.push({user: request.currentWinner, userId: request.currentWinnerId, bid: "$" + request.currentBid + ".00"});
+                                this.currentWinner = request.currentWinnerId;
+                            }
                             break;
                         case "tick":
                             this.timer = request.timer;
                             if (this.timer == 30) {
-                                this.bidHistory.push({user: "warning", userId: 0, bid: "1"});
+                                this.bidHistory.push({user: "warning", userId: "warning", bid: "1"});
                             }
                             if (this.timer == 20) {
-                                this.bidHistory.push({user: "warning", userId: 0, bid: "2"});
+                                this.bidHistory.push({user: "warning", userId: "warning", bid: "2"});
                             }
                             if (this.timer == 10) {
-                                this.bidHistory.push({user: "warning", userId: 0, bid: "3"});
+                                this.bidHistory.push({user: "warning", userId: "warning", bid: "Last chance!"});
                             }
                             break;
                         case "end":
                             this.timer = 0;
-                            this.bidHistory.push({user: "final", userId: 0, bid: "auction complete"});
+                            this.bidHistory.push({user: "final", userId: "final", bid: "auction complete"});
                             this.isLive = false;
                             break;
                         case "go live":
+                            console.log(request.minBid);
                             this.onDelay = false;
                             this.isLive = true;
+                            this.minimumBid = request.minBid;
                             break;
                         case "delay":
                             this.timer = request.timer;
+                            break;
+                        case "win":
+                            alert('Congratulations, you have won this item.')
                             break;
                         default:
                             break;

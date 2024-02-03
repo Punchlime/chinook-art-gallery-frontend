@@ -28,7 +28,8 @@ export default {
             userInfo: {
                 token: "",
                 isAdmin: "",
-                username: ""
+                username: "",
+                userID: ""
             }
         }
     },
@@ -71,8 +72,10 @@ export default {
                 this.userInfo.token = res.data.token;
                 this.userInfo.isAdmin = res.data.isAdmin;
                 this.userInfo.username = res.data.username;
+                this.userInfo.userID = res.data.userID;
                 this.displayLogin = false;
                 this.$emit('loginSuccess', this.userInfo);
+                console.log(this.userInfo);
             })
             .catch(err => {
                 console.log(err);

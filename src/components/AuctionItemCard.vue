@@ -1,7 +1,8 @@
 <template>
     <div v-if="item" class="container-fluid mx-auto" style="max-width: 1200px;">
         <div class="row g-5">
-            <div class="col-lg-8" style="text-align: left;">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6" style="text-align: left;">
                 <div class="container">
                     <div class="row" style="max-width: 800px; background-color: lightgray;">
                         <div class="col border">
@@ -13,7 +14,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mt-3 p-2 border" style="height: 200px;">
+                        <div class="col mt-3 p-2 border" style="height: 150px;">
                             {{ item.description }}
                         </div>
                     </div>
@@ -28,16 +29,31 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="container border" style="text-align: left;">
+                <div class="container border">
+                    <div class="row">
+                        <div class="col p-2 border" style="font-size: x-large;">
+                            {{ item.name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="container border mt-2" style="text-align: left;">
                     <div class="row">
                         <div class="col p-2 border overflow-auto">
-                            <div class="" style="height: 500px; overflow: auto; display: flex; flex-direction: column-reverse;">
+                            <div class="" style="height: 300px; overflow: auto; display: flex; flex-direction: column-reverse;">
                                 <ul class="list-group">
                                     <li class="list-group-item" v-for="bid in bidHistory">
-                                        {{ bid.user }} : {{ bid.bid }}
+                                        {{ bid.userId }} : {{ bid.bid }}
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div v-if="isLive && userLoggedIn && !onDelay" class="row">
+                        <div v-if="currentWinner" class="col p-2 border">
+                            Current Winner: {{ currentWinner }}
+                        </div>
+                        <div v-else="currentWinner" class="col p-2 border">
+                            Current Winner: none
                         </div>
                     </div>
                     <div v-if="isLive && userLoggedIn && !onDelay" class="row">
@@ -91,6 +107,7 @@
                     </router-link>
                 </div>
             </div>
+            <div class="col-lg-1"></div>
         </div>
     </div>
 </template>
@@ -119,7 +136,8 @@ export default {
         timer: {},
         onDelay: {
             default: false
-        }
+        },
+        currentWinner: {}
     },
     data() {
         return {

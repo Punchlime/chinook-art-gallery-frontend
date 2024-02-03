@@ -1,11 +1,11 @@
 <template>
-    <div v-if="itemId && imageCount && fileExt" class="container" style="max-width: 700px; height: 600px;">
+    <div v-if="itemId && imageCount && fileExt" class="container" style="max-width: 550px; height: 500px;">
         <div id="itemCarousel" class="carousel slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#itemCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button v-for="n in imageCount - 1" type="button" data-bs-target="#itemCarousel" :data-bs-slide-to="`${n}`" :aria-label="`Slide${n+1}`"></button>
         </div>
-        <div class="carousel-inner align-middle" style="max-width: 700px; height: 600px;">
+        <div class="carousel-inner align-middle" style="max-width: 550px; height: 500px;">
             <div class="carousel-item active">
                 <img :src="`https://image-storage-test-1231321.s3.us-east-2.amazonaws.com/${itemId}-0.${fileExt}`" class="carousel-image d-block overflow-hidden w-100" alt="...">
             </div>
