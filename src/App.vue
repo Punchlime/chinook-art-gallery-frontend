@@ -29,6 +29,17 @@ export default {
             userId: ""
         }
     },
+    mounted() {
+        if (localStorage.getItem("userLoggedIn")) {
+            console.log("logged in");
+            this.authToken = localStorage.getItem("authToken");
+            this.username = localStorage.getItem("username");
+            this.userId = localStorage.getItem("userId");
+            this.userLoggedIn = true;
+        } else {
+            console.log("not logged in")
+        }
+    },
     methods: {
         loginSuccess(userInfo) {
             console.log("login successful");
@@ -37,14 +48,24 @@ export default {
             this.username = userInfo.username;
             this.userId = userInfo.userID;
             this.userLoggedIn = true;
+            localStorage.setItem("authToken", this.authToken);
+            localStorage.setItem("username", this.username);
+            localStorage.setItem("userId", this.userId);
+            localStorage.setItem("userLoggedIn", true);
             // TODO link was "home"
             this.$router.replace({name: 'auctions'});
         },
         logOut() {
             console.log("logout successful");
+            this.isAdmin = false;
             this.authToken = "";
             this.username = "";
+            this.userId = "";
             this.userLoggedIn = false;
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("username");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userLoggedIn");
             // TODO link was "home"
             this.$router.replace({name: 'auctions'});
         }

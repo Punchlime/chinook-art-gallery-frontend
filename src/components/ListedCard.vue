@@ -41,13 +41,17 @@ export default {
             /*
                 req is:
                 startBid: starting bid
-                minInc: minimum increment
+                reserve: minimum sale price
+                estimateLow: low value estimate
+                estimateHigh: high value estimate
                 delay: delay in seconds
             */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696e6dacabc4e032e4fdb5`, {
                 startBid: 100,
-                minInc: 20,
+                reserve: 500,
+                estimateLow: 1000,
+                estimateHigh: 5000,
                 delay: 0
             })
             .then((res) => {
@@ -57,16 +61,12 @@ export default {
             })
         },
         createCupAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696e5aacabc4e032e4fdb2`, {
                 startBid: 150,
-                minInc: 20,
+                reserve: 500,
+                estimateLow: 1000,
+                estimateHigh: 5000,
                 delay: 300
             })
             .then((res) => {
@@ -76,16 +76,12 @@ export default {
             })
         },
         createTeacupAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696dc4acabc4e032e4fdaf`, {
                 startBid: 50,
-                minInc: 10,
+                reserve: 300,
+                estimateLow: 500,
+                estimateHigh: 1000,
                 delay: 10
             })
             .then((res) => {
@@ -95,16 +91,12 @@ export default {
             })
         },
         createBowlAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696c9cacabc4e032e4fdac`, {
-                startBid: 70,
-                minInc: 10,
+                startBid: 700,
+                reserve: 3500,
+                estimateLow: 5000,
+                estimateHigh: 15000,
                 delay: 0
             })
             .then((res) => {
@@ -114,16 +106,12 @@ export default {
             })
         },
         createIncenseBowlAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696c15acabc4e032e4fda9`, {
-                startBid: 70,
-                minInc: 10,
+                startBid: 170,
+                reserve: 800,
+                estimateLow: 2000,
+                estimateHigh: 5000,
                 delay: 0
             })
             .then((res) => {
@@ -133,16 +121,12 @@ export default {
             })
         },
         createVaseAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/65696a94acabc4e032e4fda6`, {
                 startBid: 200,
-                minInc: 50,
+                reserve: 15000,
+                estimateLow: 50000,
+                estimateHigh: 85000,
                 delay: 0
             })
             .then((res) => {
@@ -152,16 +136,12 @@ export default {
             })
         },
         createProcelainVaseAuction() {
-            /*
-                req is:
-                startBid: starting bid
-                minInc: minimum increment
-                delay: delay in seconds
-            */
 
             axios.post(`${process.env.VUE_APP_SERVERURL}/live-auctions/656969a2acabc4e032e4fd9d`, {
                 startBid: 150,
-                minInc: 50,
+                reserve: 500,
+                estimateLow: 1000,
+                estimateHigh: 5000,
                 delay: 0
             })
             .then((res) => {

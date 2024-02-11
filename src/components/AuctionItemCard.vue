@@ -20,10 +20,17 @@
                     </div>
                     <div class="row">
                         <div class="col-6 border">
-                            Starting Bid: ${{ startingBid }}.00
+                            Starting Price: ${{ startingBid }}
                         </div>
                         <div class="col-6 border">
-                            Minimum Bid Increment: ${{ minIncrement }}.00
+                            Estimate: ${{ estimateLow + " - $" +  estimateHigh }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border">
+                            Reserve Price: ${{ reserve }}
+                        </div>
+                        <div class="col-6 border">
                         </div>
                     </div>
                 </div>
@@ -58,12 +65,12 @@
                     </div>
                     <div v-if="isLive && userLoggedIn && !onDelay" class="row">
                         <div class="col p-2 border">
-                            Time remaining: {{ Math.floor(parseInt(timer)/60) }}:{{ parseInt(timer)%60 }}
+                            Time remaining: {{ Math.floor(parseInt(timer)/60) }}:{{ compseconds }}
                         </div>
                     </div>
                     <div v-if="!isLive && userLoggedIn && onDelay" class="row">
                         <div class="col p-2 border">
-                            This auction will begin in: {{ Math.floor(parseInt(timer)/60) }}:{{ parseInt(timer)%60 }}
+                            This auction will begin in: {{ Math.floor(parseInt(timer)/60) }}:{{ compseconds }}
                         </div>
                     </div>
                     <div v-if="!isLive && !userLoggedIn && onDelay" class="row">
@@ -132,7 +139,9 @@ export default {
             default: []
         },
         startingBid: {},
-        minIncrement: {},
+        reserve: {},
+        estimateLow: {},
+        estimateHigh: {},
         timer: {},
         onDelay: {
             default: false
@@ -147,6 +156,13 @@ export default {
     computed: {
         isBidValid() {
             return !this.customBid || !(parseInt(this.customBid) >= parseInt(this.minimumBid))
+        },
+        compseconds() {
+            var seconds = parseInt(this.timer)%60;
+            if (seconds < 10) {
+                return '0' + seconds;
+            }
+            return seconds;
         }
     },
     methods: {
@@ -161,8 +177,13 @@ export default {
                 return;
             }
 
+            if (!Number.isInteger(parseFloat(this.customBid))) {
+                alert('Invalid Bid (please do not enter decimals).');
+                return;
+            }
+
             this.$emit('submitBid', {
-                bid: this.customBid
+                bid: parseInt(this.customBid)
             })
         }
     }

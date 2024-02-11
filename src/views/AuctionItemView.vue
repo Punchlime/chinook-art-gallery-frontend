@@ -12,7 +12,9 @@
             :bid-history="bidHistory"
             :minimum-bid="minimumBid"
             :starting-bid="startBid"
-            :min-increment="minInc"
+            :reserve="reserve"
+            :estimateLow="estimateLow"
+            :estimateHigh="estimateHigh"
             :timer="timer"
             :on-delay="onDelay"
             :current-winner="currentWinner"
@@ -38,8 +40,10 @@ export default {
             bidHistory: [],
             minimumBid: 0,
             startBid: 0,
-            minInc: 0,
             timer: 0,
+            reserve: 0,
+            estimateLow: 0,
+            estimateHigh: 0,
             onDelay: false,
             currentWinner: ""
         }
@@ -94,7 +98,9 @@ export default {
         .then((res) => {
             if (res.data.itemId == this.itemId) {
                 this.startBid = res.data.startingBid;
-                this.minInc = res.data.minimumIncrement;
+                this.reserve = res.data.reserve;
+                this.estimateLow = res.data.estimateLow;
+                this.estimateHigh = res.data.estimateHigh;
             } else {
                 console.log("id does not match")
             }
@@ -187,6 +193,9 @@ export default {
                             break;
                         case "win":
                             alert('Congratulations, you have won this item.')
+                            break;
+                        case "no sale":
+                            alert('No sale, this auction was not completed.')
                             break;
                         default:
                             break;
