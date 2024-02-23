@@ -1,4 +1,10 @@
 <template>
+    <Header></Header>
+    <navbar
+        @log-out="logOut"
+        :user-logged-in="userLoggedIn"
+        :is-admin="isAdmin"
+    ></navbar>
     <div class="row row-cols-1 row-cols-md-2 g-2">
         <div style="flex: auto;">
             <div class="album py-5 bg-light">
@@ -13,14 +19,22 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
 import SmallAuctionCard from '@/components/SmallAuctionCard.vue';
 import axios from 'axios'
 export default {
     name: 'AllAuctionsView',
+    props: ['userLoggedIn', 'isAdmin'],
     data() {
         return {
             items: [],
             itemStatus: []
+        }
+    },
+    emits: {
+        logOut() {
+            return true;
         }
     },
     mounted() {
@@ -50,9 +64,14 @@ export default {
                 }
             }
             return "not live";
-        }
+        },
+        logOut() {
+            this.$emit('logOut');
+        },
     },
     components: {
+        Header,
+        Navbar,
         SmallAuctionCard
     }
 }

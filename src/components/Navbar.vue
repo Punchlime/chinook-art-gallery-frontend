@@ -13,6 +13,9 @@
                         <!-- TODO link was /auctions -->  
                         <router-link class="nav-link"  to="/">Auctions</router-link>
                     </li>
+                    <li class="nav-item me-auto me-md-0">
+                        <router-link class="nav-link"  to="/contact">Contact</router-link>
+                    </li>
                 </ul>
                 <form class="w-100 me-auto mx-md-1">
                     <div class="input-group">

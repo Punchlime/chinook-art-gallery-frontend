@@ -1,4 +1,10 @@
 <template>
+    <Header></Header>
+    <navbar
+        @log-out="logOut"
+        :user-logged-in="userLoggedIn"
+        :is-admin="isAdmin"
+    ></navbar>
     <div class="container">
         <HomeBanner></HomeBanner>
         <div class="row mt-3">
@@ -22,6 +28,8 @@
 
 <script>
 // @ is an alias to /src
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
 import HomeNews from '@/components/HomeNews.vue';
 import HomeRecommends from '@/components/HomeRecommends.vue';
 import HomeShowcase from '@/components/HomeShowcase.vue';
@@ -31,7 +39,10 @@ import axios from 'axios';
 
 export default {
     name: 'HomeView',
+    props: ['userLoggedIn', 'isAdmin'],
     components: {
+        Header,
+        Navbar,
         HomeNews,
         HomeRecommends,
         HomeShowcase,
@@ -43,6 +54,11 @@ export default {
             homeCollections: [],
             recommends: null,
             showcase: null
+        }
+    },
+    emits: {
+        logOut() {
+            return true;
         }
     },
     mounted() {
@@ -61,5 +77,10 @@ export default {
         })
         .catch(err => console.log(err))
     },
+    methods: {
+        logOut() {
+            this.$emit('logOut');
+        },
+    }
 }
 </script>

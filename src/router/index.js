@@ -6,6 +6,7 @@ import ListedView from '../views/ListedView.vue'
 import AccountView from '../views/AccountView.vue'
 import CreateItemView from '../views/CreateItemView.vue'
 import AuctionItemView from '../views/AuctionItemView.vue'
+import ContactView from '../views/ContactView.vue'
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     path: '/item/:id',
     name: 'item',
     component: AuctionItemView
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
   }
 ]
 

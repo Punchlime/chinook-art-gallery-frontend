@@ -1,4 +1,10 @@
 <template>
+    <Header></Header>
+    <navbar
+        @log-out="logOut"
+        :user-logged-in="userLoggedIn"
+        :is-admin="isAdmin"
+    ></navbar>
     <div class="loginPadding" style="height: 75px;"></div>
     <Login v-if="displayLogin" @login-user="loginUser" @show-login="showLogin" @show-register="showRegister"></Login>
     <Register v-if="displayRegister" @register-user="registerUser" @show-login="showLogin" @show-register="showRegister"></Register>
@@ -6,17 +12,23 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import RegisterSuccess from '@/components/RegisterSuccess.vue';
 import axios from 'axios';
 export default {
     name: 'LoginView',
+    props: ['userLoggedIn', 'isAdmin'],
     emits: {
         loginSuccess(userInfo) {
             if (!userInfo.token) {
                 return false;
             }
+            return true;
+        },
+        logOut() {
             return true;
         }
     },
@@ -34,6 +46,8 @@ export default {
         }
     },
     components: {
+        Header,
+        Navbar,
         Login,
         Register,
         RegisterSuccess
@@ -80,6 +94,9 @@ export default {
             .catch(err => {
                 console.log(err);
             })
+        },
+        logOut() {
+            this.$emit('logOut');
         },
         showLogin() {
             this.displayLogin = true;

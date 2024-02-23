@@ -1,4 +1,9 @@
 <template>
+    <navbar
+        @log-out="logOut"
+        :user-logged-in="userLoggedIn"
+        :is-admin="isAdmin"
+    ></navbar>
     <div class="container-fluid" style="max-width: 800px; text-align: left;">
         <div class="container-fluid px-5 py-3 my-5 border">
             <div class="row my-4">
@@ -27,9 +32,11 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
 export default {
-    props: ['authToken'],
+    props: ['authToken', 'userLoggedIn', 'isAdmin'],
     data() {
         return {
             user: {
@@ -37,6 +44,11 @@ export default {
                 email: "",
                 mobile: ""
             },
+        }
+    },
+    emits: {
+        logOut() {
+            return true;
         }
     },
     mounted() {
@@ -54,6 +66,13 @@ export default {
     },
     name: 'AccountView',
     components: {
+        Header,
+        Navbar
+    },
+    methods: {
+        logOut() {
+            this.$emit('logOut');
+        },
     }
 }
 </script>

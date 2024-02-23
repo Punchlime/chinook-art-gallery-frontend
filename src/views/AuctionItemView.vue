@@ -1,4 +1,9 @@
 <template>
+    <navbar
+        @log-out="logOut"
+        :user-logged-in="userLoggedIn"
+        :is-admin="isAdmin"
+    ></navbar>
     <div class="container-lg mx-auto">
         <div class="top padder" style="height: 50px;"></div>
         <!-- <AuctionItemHeader
@@ -23,12 +28,14 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
 import AuctionItemHeader from '@/components/AuctionItemHeader.vue';
 import AuctionItemCard from '@/components/AuctionItemCard.vue';
 import axios from 'axios';
 export default {
     name: 'AuctionItemView',
-    props: ['authToken', 'userLoggedIn', 'username', 'userId'],
+    props: ['authToken', 'userLoggedIn', 'username', 'userId', 'isAdmin'],
     data() {
         return {
             itemId: "",
@@ -46,6 +53,11 @@ export default {
             estimateHigh: 0,
             onDelay: false,
             currentWinner: ""
+        }
+    },
+    emits: {
+        logOut() {
+            return true;
         }
     },
     mounted() {
@@ -233,9 +245,14 @@ export default {
             })
             .catch(err => console.log(err))
 
-        }
+        },
+        logOut() {
+            this.$emit('logOut');
+        },
     },
     components: {
+        Header,
+        Navbar,
         AuctionItemHeader,
         AuctionItemCard
     }

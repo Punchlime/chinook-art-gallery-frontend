@@ -1,10 +1,7 @@
 <template>
-    <navbar
-        @log-out="logOut"
-        :user-logged-in="userLoggedIn"
-        :is-admin="isAdmin"
-    ></navbar>
     <router-view
+        @log-out="logOut"
+        :is-admin="isAdmin"
         @login-success="loginSuccess"
         :user-logged-in="userLoggedIn"
         :auth-token="authToken"
