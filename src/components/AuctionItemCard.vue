@@ -19,18 +19,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6 border">
+                        <div v-if="isBidQueued" class="col-6 border">
+                            Starting Price: ${{ queuedBid }}
+                        </div>
+                        <div v-if="!isBidQueued" class="col-6 border">
                             Starting Price: ${{ startingBid }}
                         </div>
                         <div class="col-6 border">
                             Estimate: ${{ estimateLow + " - $" +  estimateHigh }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 border">
-                            Reserve Price: ${{ reserve }}
-                        </div>
-                        <div class="col-6 border">
                         </div>
                     </div>
                 </div>
@@ -107,6 +103,20 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="!isLive && isQueuedBidder" class="container border mt-2">
+                    <div class="row">
+                        <div class="col p-2 border">
+                            You are holding the queued bid (${{ queuedBid }})
+                        </div>
+                    </div>
+                </div>
+                <div v-if="!isLive" class="input-group mt-2 w-100">
+                    <span class="input-group-text">Queue Bid</span>
+                    <span class="input-group-text">$</span>
+                    <input type="text" id="queueBidInput" class="form-control" aria-label="bidInput" v-model="queueBidInput" aria-describedby="Input bid">
+                    <span class="input-group-text">.00</span>
+                    <button class="btn btn-outline-secondary" type="button" id="submitQueueBid" :disabled="isQueueBidValid" @click.prevent="submitQueueBid">Queue bid</button>
+                </div>
                 <div class="mt-2">
                     <!-- TODO link was /auctions -->
                     <router-link class="btn btn-outline-secondary" to="/">
@@ -146,16 +156,33 @@ export default {
         onDelay: {
             default: false
         },
-        currentWinner: {}
+        currentWinner: {},
+        isBidQueued: {
+            default: false
+        },
+        queuedBid: {
+            default: null
+        },
+        queuedUser: {
+            default: null
+        },
+        userId: {}
     },
     data() {
         return {
-            customBid: ""
+            customBid: "",
+            queueBidInput: ""
         }
     },
     computed: {
         isBidValid() {
             return !this.customBid || !(parseInt(this.customBid) >= parseInt(this.minimumBid))
+        },
+        isQueueBidValid() {
+            if (this.isBidQueued) {
+                return !this.queueBidInput || !(parseInt(this.queueBidInput) >= parseInt(this.queuedBid))
+            }
+            return !this.queueBidInput || !(parseInt(this.queueBidInput) >= parseInt(this.startingBid))
         },
         compseconds() {
             var seconds = parseInt(this.timer)%60;
@@ -163,6 +190,9 @@ export default {
                 return '0' + seconds;
             }
             return seconds;
+        },
+        isQueuedBidder() {
+            return this.userId == this.queuedUser;
         }
     },
     methods: {
@@ -185,6 +215,23 @@ export default {
             this.$emit('submitBid', {
                 bid: parseInt(this.customBid)
             })
+        },
+        submitQueueBid() {
+            if (this.isQueueBidValid) {
+                alert('Invalid Bid');
+                return;
+            }
+
+            if (!Number.isInteger(parseFloat(this.queueBidInput))) {
+                alert('Invalid Bid (please do not enter decimals).');
+                return;
+            }
+
+            this.$emit('submitQueueBid', {
+                bid: parseInt(this.queueBidInput)
+            })
+
+            return;
         }
     }
 }

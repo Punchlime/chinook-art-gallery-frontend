@@ -13,6 +13,7 @@
             :item="item"
             :user-logged-in="userLoggedIn"
             @submit-bid="submitBid"
+            @submit-queue-bid="submitQueueBid"
             :is-live="isLive"
             :bid-history="bidHistory"
             :minimum-bid="minimumBid"
@@ -23,6 +24,10 @@
             :timer="timer"
             :on-delay="onDelay"
             :current-winner="currentWinner"
+            :is-bid-queued="isBidQueued"
+            :queued-bid="queuedBid"
+            :queued-user="queuedUser"
+            :user-id="userId"
         ></AuctionItemCard>
     </div>
 </template>
@@ -52,7 +57,10 @@ export default {
             estimateLow: 0,
             estimateHigh: 0,
             onDelay: false,
-            currentWinner: ""
+            currentWinner: "",
+            isBidQueued: false,
+            queuedBid: "",
+            queuedUser: ""
         }
     },
     emits: {
@@ -79,7 +87,7 @@ export default {
             switch(res.data.status) {
                 case "live":
                     this.isLive = true;
-                    this.minimumBid = res.data.minBid
+                    this.minimumBid = res.data.minBid;
                     this.bidHistory = res.data.history;
                     for (let index in this.bidHistory) {
                         if (this.bidHistory[index].userId == this.userId) {
@@ -88,6 +96,10 @@ export default {
                         }
                         console.log(this.bidHistory[index]);
                         this.bidHistory[index].bid = "$" + this.bidHistory[index].bid + ".00";
+                    }
+                    this.currentWinner = res.data.currentWinner;
+                    if (this.currentWinner == this.userId) {
+                        this.currentWinner = "You"
                     }
                     // TODO
                     break;
@@ -113,6 +125,11 @@ export default {
                 this.reserve = res.data.reserve;
                 this.estimateLow = res.data.estimateLow;
                 this.estimateHigh = res.data.estimateHigh;
+                if (res.data.isBidQueued) {
+                    this.isBidQueued = true;
+                    this.queuedBid = res.data.queuedBid;
+                    this.queuedUser = res.data.queuedUser;
+                }
             } else {
                 console.log("id does not match")
             }
@@ -229,6 +246,29 @@ export default {
                     username: this.username,
                     bid: bidObj.bid
                 }));
+            } else {
+                // TODO throw error or prevent
+                console.log("not logged in");
+            }
+        },
+        submitQueueBid(bidObj) {
+            if (this.userLoggedIn) {
+                axios.patch(`${process.env.VUE_APP_SERVERURL}/auctions/queue`, {
+                    itemId: this.itemId,
+                    userid: this.userId,
+                    username: this.username,
+                    bid: bidObj.bid
+                })
+                .then((res) => {
+                    if (res.status == 200) {
+                        this.isBidQueued = true;
+                        this.queuedBid = bidObj.bid;
+                        this.queuedUser = this.userId;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             } else {
                 // TODO throw error or prevent
                 console.log("not logged in");

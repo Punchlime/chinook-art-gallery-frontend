@@ -67,7 +67,7 @@ export default {
                 reserve: 500,
                 estimateLow: 1000,
                 estimateHigh: 5000,
-                delay: 300
+                delay: 0
             })
             .then((res) => {
             })
@@ -82,7 +82,7 @@ export default {
                 reserve: 300,
                 estimateLow: 500,
                 estimateHigh: 1000,
-                delay: 10
+                delay: 0
             })
             .then((res) => {
             })
