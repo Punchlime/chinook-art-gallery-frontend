@@ -103,14 +103,14 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!isLive && isQueuedBidder" class="container border mt-2">
+                <div v-if="!isLive && isQueuedBidder && userLoggedIn" class="container border mt-2">
                     <div class="row">
                         <div class="col p-2 border">
                             You are holding the queued bid (${{ queuedBid }})
                         </div>
                     </div>
                 </div>
-                <div v-if="!isLive" class="input-group mt-2 w-100">
+                <div v-if="!isLive && userLoggedIn" class="input-group mt-2 w-100">
                     <span class="input-group-text">Queue Bid</span>
                     <span class="input-group-text">$</span>
                     <input type="text" id="queueBidInput" class="form-control" aria-label="bidInput" v-model="queueBidInput" aria-describedby="Input bid">
