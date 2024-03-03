@@ -255,7 +255,7 @@ export default {
             if (this.userLoggedIn) {
                 axios.patch(`${process.env.VUE_APP_SERVERURL}/auctions/queue`, {
                     itemId: this.itemId,
-                    userid: this.userId,
+                    userId: this.userId,
                     username: this.username,
                     bid: bidObj.bid
                 })
