@@ -19,11 +19,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-if="isBidQueued" class="col-6 border">
+                        <div v-if="!isComplete && isBidQueued" class="col-6 border">
                             Starting Price: ${{ queuedBid }}
                         </div>
-                        <div v-if="!isBidQueued" class="col-6 border">
+                        <div v-if="!isComplete && !isBidQueued" class="col-6 border">
                             Starting Price: ${{ startingBid }}
+                        </div>
+                        <div v-if="isComplete && noSale" class="col-6 border">
+                            This item was not sold
+                        </div>
+                        <div v-if="isComplete && !noSale" class="col-6 border">
+                            Sold for: ${{ finalPrice }}
                         </div>
                         <div class="col-6 border">
                             Estimate: ${{ estimateLow + " - $" +  estimateHigh }}
@@ -47,11 +53,17 @@
                                     <li class="list-group-item" v-for="bid in bidHistory">
                                         {{ bid.userId }} : {{ bid.bid }}
                                     </li>
+                                    <li v-if="isComplete && isFinalWinner" class="list-group-item" style="background-color: lightgreen;">
+                                        You have won this item for: ${{ finalPrice }}
+                                    </li>
+                                    <li v-if="isComplete && noSale" class="list-group-item" style="background-color: lightpink;">
+                                        This item was not sold
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div v-if="isLive && userLoggedIn && !onDelay" class="row">
+                    <div v-if="!isComplete && isLive && userLoggedIn && !onDelay" class="row">
                         <div v-if="currentWinner" class="col p-2 border">
                             Current Winner: {{ currentWinner }}
                         </div>
@@ -59,58 +71,79 @@
                             Current Winner: none
                         </div>
                     </div>
-                    <div v-if="isLive && userLoggedIn && !onDelay" class="row">
+                    <div v-if="!isComplete && isLive && userLoggedIn && !onDelay" class="row">
                         <div class="col p-2 border">
                             Time remaining: {{ Math.floor(parseInt(timer)/60) }}:{{ compseconds }}
                         </div>
                     </div>
-                    <div v-if="!isLive && userLoggedIn && onDelay" class="row">
+                    <div v-if="!isComplete && !isLive && userLoggedIn && onDelay" class="row">
                         <div class="col p-2 border">
                             This auction will begin in: {{ Math.floor(parseInt(timer)/60) }}:{{ compseconds }}
                         </div>
                     </div>
-                    <div v-if="!isLive && !userLoggedIn && onDelay" class="row">
+                    <div v-if="!isComplete && !isLive && !userLoggedIn && onDelay" class="row">
                         <div class="col p-2 border">
                             This auction will begin shortly
                         </div>
                     </div>
                 </div>
-                <div v-if="isLive && userLoggedIn" class="input-group mt-2 w-100">
+                <div v-if="!isComplete && isLive && userLoggedIn" class="input-group mt-2 w-100">
                     <span class="input-group-text">Minimum Bid</span>
                     <span class="input-group-text">$</span>
                     <input type="text" class="form-control" :placeholder="minimumBid" aria-label="bidInput" aria-describedby="Minimum Bid" disabled>
                     <span class="input-group-text">.00</span>
                     <button class="btn btn-outline-secondary float-end w-auto" type="button" id="submitMinimumBid" @click.prevent="submitMinimumBid">Place bid</button>
                 </div>
-                <div v-if="isLive && userLoggedIn" class="input-group mt-2">
+                <div v-if="!isComplete && isLive && userLoggedIn" class="input-group mt-2">
                     <span class="input-group-text">Custom Bid</span>
                     <span class="input-group-text">$</span>
                     <input type="text" id="customBidInput" class="form-control" aria-label="bidInput" v-model="customBid" aria-describedby="Input bid">
                     <span class="input-group-text">.00</span>
                     <button class="btn btn-outline-secondary" type="button" id="submitCustomBid" :disabled="isBidValid" @click.prevent="submitCustomBid">Place bid</button>
                 </div>
-                <div v-if="isLive && !userLoggedIn" class="container border">
+                <div v-if="!isComplete && isLive && !userLoggedIn" class="container border">
                     <div class="row">
                         <div class="col p-2 border">
                             Log in to join the live auction
                         </div>
                     </div>
                 </div>
-                <div v-if="!isLive" class="container border mt-2">
+                <div v-if="!isComplete && !isLive" class="container border mt-2">
                     <div class="row">
                         <div class="col p-2 border">
                             This item is not currently being auctioned
                         </div>
                     </div>
                 </div>
-                <div v-if="!isLive && isQueuedBidder && userLoggedIn" class="container border mt-2">
+                <div v-if="isComplete" class="container border mt-2">
                     <div class="row">
                         <div class="col p-2 border">
-                            You are holding the queued bid (${{ queuedBid }})
+                            This auction has completed
                         </div>
                     </div>
                 </div>
-                <div v-if="!isLive && userLoggedIn" class="input-group mt-2 w-100">
+                <!-- <div v-if="isComplete && isFinalWinner" class="container border mt-2">
+                    <div class="row">
+                        <div class="col p-2 border">
+                            You won this item for: ${{ finalPrice }}
+                        </div>
+                    </div>
+                </div> -->
+                <div v-if="!isComplete && !isLive" class="container border mt-2">
+                    <div class="row">
+                        <div class="col p-2 border">
+                            Current Bids: {{ queuedBidCount }}
+                        </div>
+                    </div>
+                </div>
+                <div v-if="!isComplete && !isLive && isQueuedBidder && userLoggedIn" class="container border mt-2">
+                    <div class="row">
+                        <div class="col p-2 border">
+                            You are holding the winning bid (${{ queuedBid }})
+                        </div>
+                    </div>
+                </div>
+                <div v-if="!isComplete && !isLive && userLoggedIn" class="input-group mt-2 w-100">
                     <span class="input-group-text">Queue Bid</span>
                     <span class="input-group-text">$</span>
                     <input type="text" id="queueBidInput" class="form-control" aria-label="bidInput" v-model="queueBidInput" aria-describedby="Input bid">
@@ -166,7 +199,19 @@ export default {
         queuedUser: {
             default: null
         },
-        userId: {}
+        userId: {},
+        isComplete: {
+            default: false
+        },
+        finalWinner: {
+            default: null
+        },
+        finalPrice: {
+            default: null
+        },
+        queuedBidCount: {
+            default: 0
+        }
     },
     data() {
         return {
@@ -193,7 +238,21 @@ export default {
         },
         isQueuedBidder() {
             return this.userId == this.queuedUser;
+        },
+        isFinalWinner() {
+            if (this.finalWinner) {
+                return this.userId == this.finalWinner;
+            }
+
+            return false;
+        },
+        noSale() {
+            return !this.finalWinner;
         }
+    },
+    emits: {
+        submitBid: null,
+        submitQueueBid: null
     },
     methods: {
         submitMinimumBid() {

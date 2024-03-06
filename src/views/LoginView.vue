@@ -89,7 +89,6 @@ export default {
                 this.userInfo.userID = res.data.userID;
                 this.displayLogin = false;
                 this.$emit('loginSuccess', this.userInfo);
-                console.log(this.userInfo);
             })
             .catch(err => {
                 console.log(err);

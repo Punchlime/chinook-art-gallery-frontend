@@ -59,7 +59,6 @@ export default {
             }
             for (let item of this.itemStatus) {
                 if (item.itemId == itemId) {
-                    console.log(item.status);
                     return item.status;
                 }
             }

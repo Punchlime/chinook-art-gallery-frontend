@@ -60,9 +60,6 @@ export default {
                 email: this.email,
                 password: this.password
             })
-            // if (!this.)
-            // send post request
-            // this.$emit()
         }
     }
 }

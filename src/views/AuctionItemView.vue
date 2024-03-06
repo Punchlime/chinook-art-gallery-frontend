@@ -28,6 +28,10 @@
             :queued-bid="queuedBid"
             :queued-user="queuedUser"
             :user-id="userId"
+            :is-complete="isComplete"
+            :final-winner="finalWinner"
+            :final-price="finalPrice"
+            :queued-bid-count="queuedBidCount"
         ></AuctionItemCard>
     </div>
 </template>
@@ -49,6 +53,7 @@ export default {
             authenticated: false,
             testData: "Test Data",
             isLive: false,
+            isComplete: false,
             bidHistory: [],
             minimumBid: 0,
             startBid: 0,
@@ -60,7 +65,10 @@ export default {
             currentWinner: "",
             isBidQueued: false,
             queuedBid: "",
-            queuedUser: ""
+            queuedUser: "",
+            finalWinner: "",
+            finalPrice: "",
+            queuedBidCount: 0
         }
     },
     emits: {
@@ -94,7 +102,6 @@ export default {
                             this.bidHistory[index].user = "You";
                             this.bidHistory[index].userId = "You";
                         }
-                        console.log(this.bidHistory[index]);
                         this.bidHistory[index].bid = "$" + this.bidHistory[index].bid + ".00";
                     }
                     this.currentWinner = res.data.currentWinner;
@@ -125,10 +132,16 @@ export default {
                 this.reserve = res.data.reserve;
                 this.estimateLow = res.data.estimateLow;
                 this.estimateHigh = res.data.estimateHigh;
+                this.isComplete = res.data.isComplete;
+                if (this.isComplete) {
+                    this.finalWinner = res.data.finalWinner;
+                    this.finalPrice = res.data.sellPrice;
+                }
                 if (res.data.isBidQueued) {
                     this.isBidQueued = true;
                     this.queuedBid = res.data.queuedBid;
                     this.queuedUser = res.data.queuedUser;
+                    this.queuedBidCount = res.data.queuedBidCount;
                 }
             } else {
                 console.log("id does not match")
@@ -210,9 +223,9 @@ export default {
                             this.timer = 0;
                             this.bidHistory.push({user: "final", userId: "final", bid: "auction complete"});
                             this.isLive = false;
+                            this.isComplete = true;
                             break;
                         case "go live":
-                            console.log(request.minBid);
                             this.onDelay = false;
                             this.isLive = true;
                             this.minimumBid = request.minBid;
@@ -221,10 +234,18 @@ export default {
                             this.timer = request.timer;
                             break;
                         case "win":
-                            alert('Congratulations, you have won this item.')
+                            // might no longer be needed
+                            // alert('Congratulations, you have won this item.');
+                            this.finalWinner = request.winner;
+                            this.finalPrice = request.price;
+                            break;
+                        case "sold":
+                            // alert('Congratulations, you have won this item.');
+                            this.finalWinner = request.winner;
+                            this.finalPrice = request.price;
                             break;
                         case "no sale":
-                            alert('No sale, this auction was not completed.')
+                            // alert('No sale, this auction was not completed.');
                             break;
                         default:
                             break;
