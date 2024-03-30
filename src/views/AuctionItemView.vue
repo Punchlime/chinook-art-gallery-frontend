@@ -212,18 +212,18 @@ export default {
                         case "tick":
                             this.timer = request.timer;
                             if (this.timer == 30) {
-                                this.bidHistory.push({user: "warning", userId: "warning", bid: "1"});
+                                this.bidHistory.push({user: "warning", userId: "warning", uID: "warning", bid: "1"});
                             }
                             if (this.timer == 20) {
-                                this.bidHistory.push({user: "warning", userId: "warning", bid: "2"});
+                                this.bidHistory.push({user: "warning", userId: "warning", uID: "warning", bid: "2"});
                             }
                             if (this.timer == 10) {
-                                this.bidHistory.push({user: "warning", userId: "warning", bid: "Last chance!"});
+                                this.bidHistory.push({user: "warning", userId: "warning", uID: "warning", bid: "Last chance!"});
                             }
                             break;
                         case "end":
                             this.timer = 0;
-                            this.bidHistory.push({user: "final", userId: "final", bid: "auction complete"});
+                            this.bidHistory.push({user: "final", userId: "final", uID: "final", bid: "auction complete"});
                             this.isLive = false;
                             this.isComplete = true;
                             break;
