@@ -51,7 +51,7 @@
                             <div class="" style="height: 300px; overflow: auto; display: flex; flex-direction: column-reverse;">
                                 <ul class="list-group">
                                     <li class="list-group-item" v-for="bid in bidHistory">
-                                        {{ bid.userId }} : {{ bid.bid }}
+                                        {{ bid.uID }} : {{ bid.bid }}
                                     </li>
                                     <li v-if="isComplete && isFinalWinner" class="list-group-item" style="background-color: lightgreen;">
                                         You have won this item for: ${{ finalPrice }}
@@ -200,6 +200,7 @@ export default {
             default: null
         },
         userId: {},
+        uID: {},
         isComplete: {
             default: false
         },

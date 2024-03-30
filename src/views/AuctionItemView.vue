@@ -28,6 +28,7 @@
             :queued-bid="queuedBid"
             :queued-user="queuedUser"
             :user-id="userId"
+            :u-i-d="uID"
             :is-complete="isComplete"
             :final-winner="finalWinner"
             :final-price="finalPrice"
@@ -44,7 +45,7 @@ import AuctionItemCard from '@/components/AuctionItemCard.vue';
 import axios from 'axios';
 export default {
     name: 'AuctionItemView',
-    props: ['authToken', 'userLoggedIn', 'username', 'userId', 'isAdmin'],
+    props: ['authToken', 'userLoggedIn', 'username', 'userId', 'isAdmin', 'uID'],
     data() {
         return {
             itemId: "",
@@ -101,6 +102,7 @@ export default {
                         if (this.bidHistory[index].userId == this.userId) {
                             this.bidHistory[index].user = "You";
                             this.bidHistory[index].userId = "You";
+                            this.bidHistory[index].uID = "You";
                         }
                         this.bidHistory[index].bid = "$" + this.bidHistory[index].bid + ".00";
                     }
@@ -200,10 +202,10 @@ export default {
                             this.minimumBid = request.minBid;
                             // TODO show "you"
                             if (request.currentWinnerId == this.userId) {
-                                this.bidHistory.push({user: "You", userId: "You", bid: "$" + request.currentBid + ".00"});
+                                this.bidHistory.push({user: "You", userId: "You", uID: "You", bid: "$" + request.currentBid + ".00"});
                                 this.currentWinner = "You";
                             } else {
-                                this.bidHistory.push({user: request.currentWinner, userId: request.currentWinnerId, bid: "$" + request.currentBid + ".00"});
+                                this.bidHistory.push({user: request.currentWinner, userId: request.currentWinnerId, uID: request.currentWinnerUID, bid: "$" + request.currentBid + ".00"});
                                 this.currentWinner = request.currentWinnerId;
                             }
                             break;
@@ -265,6 +267,7 @@ export default {
                 this.connection.send(JSON.stringify({
                     type: "bid",
                     username: this.username,
+                    uID: this.uID,
                     bid: bidObj.bid
                 }));
             } else {
@@ -278,6 +281,7 @@ export default {
                     itemId: this.itemId,
                     userId: this.userId,
                     username: this.username,
+                    uID: this.uID,
                     bid: bidObj.bid
                 })
                 .then((res) => {

@@ -41,7 +41,8 @@ export default {
                 token: "",
                 isAdmin: "",
                 username: "",
-                userID: ""
+                userID: "",
+                uID: ""
             }
         }
     },
@@ -87,6 +88,7 @@ export default {
                 this.userInfo.isAdmin = res.data.isAdmin;
                 this.userInfo.username = res.data.username;
                 this.userInfo.userID = res.data.userID;
+                this.userInfo.uID = res.data.uID;
                 this.displayLogin = false;
                 this.$emit('loginSuccess', this.userInfo);
             })

@@ -7,6 +7,7 @@
         :auth-token="authToken"
         :username="username"
         :user-id="userId"
+        :u-i-d="uID"
     />
 </template>
 
@@ -23,7 +24,8 @@ export default {
             authToken: "",
             isAdmin: false,
             username: "",
-            userId: ""
+            userId: "",
+            uID: ""
         }
     },
     mounted() {
@@ -44,10 +46,12 @@ export default {
             this.isAdmin = userInfo.isAdmin;
             this.username = userInfo.username;
             this.userId = userInfo.userID;
+            this.uID = userInfo.uID;
             this.userLoggedIn = true;
             localStorage.setItem("authToken", this.authToken);
             localStorage.setItem("username", this.username);
             localStorage.setItem("userId", this.userId);
+            localStorage.setItem("uID", this.uID);
             localStorage.setItem("userLoggedIn", true);
             // TODO link was "home"
             this.$router.replace({name: 'auctions'});
@@ -58,10 +62,12 @@ export default {
             this.authToken = "";
             this.username = "";
             this.userId = "";
+            this.uID = "";
             this.userLoggedIn = false;
             localStorage.removeItem("authToken");
             localStorage.removeItem("username");
             localStorage.removeItem("userId");
+            localStorage.removeItem("uID");
             localStorage.removeItem("userLoggedIn");
             // TODO link was "home"
             this.$router.replace({name: 'auctions'});
