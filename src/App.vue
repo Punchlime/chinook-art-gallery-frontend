@@ -1,8 +1,8 @@
 <template>
     <router-view
         @log-out="logOut"
-        :is-admin="isAdmin"
         @login-success="loginSuccess"
+        :is-admin="isAdmin"
         :user-logged-in="userLoggedIn"
         :auth-token="authToken"
         :username="username"
@@ -34,6 +34,7 @@ export default {
             this.authToken = localStorage.getItem("authToken");
             this.username = localStorage.getItem("username");
             this.userId = localStorage.getItem("userId");
+            this.uID = localStorage.getItem("uID");
             this.userLoggedIn = true;
         } else {
             console.log("not logged in")
@@ -53,7 +54,6 @@ export default {
             localStorage.setItem("userId", this.userId);
             localStorage.setItem("uID", this.uID);
             localStorage.setItem("userLoggedIn", true);
-            // TODO link was "home"
             this.$router.replace({name: 'auctions'});
         },
         logOut() {
@@ -69,7 +69,6 @@ export default {
             localStorage.removeItem("userId");
             localStorage.removeItem("uID");
             localStorage.removeItem("userLoggedIn");
-            // TODO link was "home"
             this.$router.replace({name: 'auctions'});
         }
     }

@@ -62,7 +62,7 @@ export default {
                 email: registerObj.email,
                 password: registerObj.password,
                 mobile: registerObj.mobile,
-                credit: registerObj.credit
+                // credit: registerObj.credit
             })
             .then((res) => {
                 this.displayRegister = false;

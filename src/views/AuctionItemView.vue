@@ -24,6 +24,7 @@
             :timer="timer"
             :on-delay="onDelay"
             :current-winner="currentWinner"
+            :current-winner-u-i-d="currentWinnerUID"
             :is-bid-queued="isBidQueued"
             :queued-bid="queuedBid"
             :queued-user="queuedUser"
@@ -64,6 +65,7 @@ export default {
             estimateHigh: 0,
             onDelay: false,
             currentWinner: "",
+            currentWinnerUID: "",
             isBidQueued: false,
             queuedBid: "",
             queuedUser: "",
@@ -107,8 +109,10 @@ export default {
                         this.bidHistory[index].bid = "$" + this.bidHistory[index].bid + ".00";
                     }
                     this.currentWinner = res.data.currentWinner;
+                    this.currentWinnerUID = res.data.currentWinnerUID;
                     if (this.currentWinner == this.userId) {
                         this.currentWinner = "You"
+                        this.currentWinnerUID = "You"
                     }
                     // TODO
                     break;
@@ -204,9 +208,11 @@ export default {
                             if (request.currentWinnerId == this.userId) {
                                 this.bidHistory.push({user: "You", userId: "You", uID: "You", bid: "$" + request.currentBid + ".00"});
                                 this.currentWinner = "You";
+                                this.currentWinnerUID = "You";
                             } else {
                                 this.bidHistory.push({user: request.currentWinner, userId: request.currentWinnerId, uID: request.currentWinnerUID, bid: "$" + request.currentBid + ".00"});
                                 this.currentWinner = request.currentWinnerId;
+                                this.currentWinnerUID = request.currentWinnerUID;
                             }
                             break;
                         case "tick":

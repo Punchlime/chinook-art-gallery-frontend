@@ -46,7 +46,9 @@ export default {
     name: 'Register',
     emits: {
         registerUser(registerObj) {
-            if (!registerObj.username || !registerObj.email || !registerObj.password || !registerObj.mobile || !registerObj.credit) {
+            if (
+                !registerObj.username || !registerObj.email || !registerObj.password || !registerObj.mobile || !registerObj.credit
+            ) {
                 return false;
             }
             return true;
@@ -71,7 +73,9 @@ export default {
     },
     methods: {
         submitRegister() {
-            if (!this.username || !this.email || !this.password || !this.confirmPassword || !this.mobile || !this.credit) {
+            if (
+                !this.username || !this.email || !this.password || !this.confirmPassword || !this.mobile || !this.credit
+            ) {
                 alert('Please fill the form');
                 return;
             }
@@ -87,7 +91,7 @@ export default {
             }
 
             if (this.mobile.length != 10) {
-                console.log('credit error');
+                console.log('mobile number error');
                 alert('Please enter a 10 digit phone number');
                 return;
             }

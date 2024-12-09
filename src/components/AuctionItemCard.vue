@@ -64,10 +64,10 @@
                         </div>
                     </div>
                     <div v-if="!isComplete && isLive && userLoggedIn && !onDelay" class="row">
-                        <div v-if="currentWinner" class="col p-2 border">
-                            Current Winner: {{ currentWinner }}
+                        <div v-if="currentWinnerUID" class="col p-2 border">
+                            Current Winner: {{ currentWinnerUID }}
                         </div>
-                        <div v-else="currentWinner" class="col p-2 border">
+                        <div v-else="currentWinnerUID" class="col p-2 border">
                             Current Winner: none
                         </div>
                     </div>
@@ -190,6 +190,7 @@ export default {
             default: false
         },
         currentWinner: {},
+        currentWinnerUID: {},
         isBidQueued: {
             default: false
         },
