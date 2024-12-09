@@ -80,13 +80,23 @@ export default {
                 return;
             }
 
+            if (this.username.length < 5 || this.username.length > 50) {
+                alert('Please enter a username between 5 and 50 characters');
+                return;
+            }
+
+            if (!this.email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
             if (this.password != this.confirmPassword) {
                 alert('Password does not match confirmation');
                 return;
             }
 
             if (!/[A-Z]/.test(this.password) || !/[a-z]/.test(this.password) || this.password.length < 8) {
-                alert('Must contain at least one upper case letter, one lower case letter, and be at least 8 characters long.');
+                alert('Password must contain at least one upper case letter, one lower case letter, and be at least 8 characters long.');
                 return;
             }
 

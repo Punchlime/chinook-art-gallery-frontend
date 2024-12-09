@@ -93,6 +93,7 @@ export default {
                 this.$emit('loginSuccess', this.userInfo);
             })
             .catch(err => {
+                alert('Incorrect email address or password');
                 console.log(err);
             })
         },
