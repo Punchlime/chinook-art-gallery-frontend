@@ -6,7 +6,7 @@
                 <span> 海底拾珍</span>
             </h5>
             <!-- TODO link was /auctions -->
-            <RouterLink class="col-6" to="/" style="text-align: right;">See all items</RouterLink>
+            <RouterLink class="col-6" to="/items" style="text-align: right;">See all items</RouterLink>
         </div>
         <div class="row m-2">
             <HomeImageCard v-if="showcaseCollection" v-for="item in showcaseCollection.items" :key="item._id" :item="item"></HomeImageCard>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import HomeTempView from '../views/HomeTempView.vue'
 import AllAuctionsView from '../views/AllAuctionsView.vue'
 import LoginView from '../views/LoginView.vue'
 import ListedView from '../views/ListedView.vue'
@@ -25,6 +26,11 @@ const routes = [
   // },
   {
     path: '/',
+    name: 'hometemp',
+    component: HomeTempView
+  },
+  {
+    path: '/items',
     name: 'auctions',
     component: AllAuctionsView
   },

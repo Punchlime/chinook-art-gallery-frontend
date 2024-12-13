@@ -152,7 +152,7 @@
                 </div>
                 <div class="mt-2">
                     <!-- TODO link was /auctions -->
-                    <router-link class="btn btn-outline-secondary" to="/">
+                    <router-link class="btn btn-outline-secondary" to="/items">
                         Return to collection
                     </router-link>
                 </div>

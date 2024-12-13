@@ -6,7 +6,7 @@
                 <span> 精品推荐</span>
             </h5>
             <!-- TODO link was /auctions -->
-            <RouterLink class="col-6" to="/" style="text-align: right;">See all items</RouterLink>
+            <RouterLink class="col-6" to="/items" style="text-align: right;">See all items</RouterLink>
         </div>
         <div class="row m-2">
             <HomeImageCard v-if="recommendsCollection" v-for="item in recommendsCollection.items" :key="item._id" :item="item"></HomeImageCard>

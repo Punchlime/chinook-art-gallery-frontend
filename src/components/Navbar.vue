@@ -6,12 +6,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mx-auto mx-md-2">
-                    <!-- <li class="nav-item me-auto me-md-0">
+                    <li class="nav-item me-auto me-md-0">
                         <router-link class="nav-link"  to="/">Home</router-link>
-                    </li> -->
+                    </li>
                     <li class="nav-item me-auto me-md-0">
                         <!-- TODO link was /auctions -->  
-                        <router-link class="nav-link"  to="/">Auctions</router-link>
+                        <router-link class="nav-link"  to="/items">Auctions</router-link>
                     </li>
                     <li class="nav-item me-auto me-md-0">
                         <router-link class="nav-link"  to="/contact">Contact</router-link>
